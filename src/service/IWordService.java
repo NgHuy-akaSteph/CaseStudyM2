@@ -3,7 +3,7 @@ package service;
 import entities.Word;
 
 public interface IWordService {
-    public Word getWord(String word);
+    public Word lookup(String word);
 
-    public boolean removeWord(String word);
+    public boolean drop(String word);
 }

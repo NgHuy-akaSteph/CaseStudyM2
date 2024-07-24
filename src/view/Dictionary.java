@@ -1,8 +1,6 @@
 package view;
 
 import controller.WordController;
-import service.IWordService;
-import service.WordServiceImpl;
 
 import java.util.Scanner;
 
@@ -20,10 +18,10 @@ public class Dictionary {
             int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
-                    wordController.searchWord();
+                    wordController.lookup();
                     break;
                 case 2:
-                    wordController.removeWord();
+                    wordController.drop();
                     break;
                 case 0:
                     System.out.println("Kết thúc chương trình!");

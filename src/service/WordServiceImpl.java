@@ -8,12 +8,12 @@ public class WordServiceImpl implements IWordService {
     private final IWordRepo wordRepo = new WordRepoImpl();
 
     @Override
-    public Word getWord(String word) {
-        return wordRepo.getWord(word);
+    public Word lookup(String word) {
+        return wordRepo.lookup(word);
     }
 
     @Override
-    public boolean removeWord(String word) {
-        return wordRepo.removeWord(word);
+    public boolean drop(String word) {
+        return wordRepo.drop(word);
     }
 }

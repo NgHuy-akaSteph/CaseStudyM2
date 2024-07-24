@@ -9,10 +9,10 @@ import java.util.Scanner;
 public class WordController{
     private final IWordService wordService = new WordServiceImpl();
     private final static Scanner scanner = new Scanner(System.in);
-    public void searchWord() {
+    public void lookup() {
         System.out.print("Nhập từ cần tra: ");
         String inputString = scanner.nextLine();
-        Word word = wordService.getWord(inputString);
+        Word word = wordService.lookup(inputString);
         if(word == null) {
             System.out.println("Không tìm thấy từ cần tra!");
         } else {
@@ -20,10 +20,10 @@ public class WordController{
         }
     }
 
-    public void removeWord() {
+    public void drop() {
         System.out.print("Nhập từ cần xóa: ");
         String inputString = scanner.nextLine();
-        boolean result = wordService.removeWord(inputString);
+        boolean result = wordService.drop(inputString);
         if(result) {
             System.out.println( inputString +" đã bị xóa khỏi từ điển!");
         } else {

@@ -1,9 +1,12 @@
 package repository;
 
+import entities.Request;
 import entities.Word;
 
 public interface IWordRepo {
-    public Word getWord(String word);
+    public Word lookup(String word);
 
-    public boolean removeWord(String word);
+    public boolean defineWord(Request request);
+
+    public boolean drop(String word);
 }

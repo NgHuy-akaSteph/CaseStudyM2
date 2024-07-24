@@ -1,9 +1,10 @@
 package repository;
 
 import entities.Definition;
+import entities.Request;
 import entities.Word;
 
-import java.util.HashMap;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,21 +37,29 @@ public class WordRepoImpl implements IWordRepo {
         Definition def16 = new Definition("Verb", "Hợp, vừa", "The key fits the lock perfectly");
         Definition def17 = new Definition ("Adjective", "Thích hợp, phù hợp", "The dress is a perfect fit");
         Word w6 = new Word("fit", "/fɪt/", List.of(def16, def17), List.of("suitable", "match"));
+        Definition def18 = new Definition ("Adjective", "Tốt, hay, giỏi", "She is a good student");
+        Word w7 = new Word("good", "/ɡʊd/", List.of(def18), List.of("excellent", "nice"));
         dictionary.put("address", w);
         dictionary.put("book", w1);
         dictionary.put("capital", w4);
         dictionary.put("duck", w3);
         dictionary.put("end", w5);
         dictionary.put("fit", w6);
+        dictionary.put("good", w7);
         dictionary.put("season", w2);
     }
 
     @Override
-    public Word getWord(String word) {
+    public Word lookup(String word) {
         return dictionary.get(word);
     }
 
-    public boolean removeWord(String word) {
+    @Override
+    public boolean defineWord(Request request) {
+        return false;
+    }
+
+    public boolean drop(String word) {
         if(dictionary.containsKey(word)) {
             dictionary.remove(word);
             return true;
