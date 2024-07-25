@@ -13,6 +13,8 @@ public class Dictionary {
             System.out.println("------# Từ điển Anh - Việt #------");
             System.out.println("1. Tra từ");
             System.out.println("2. Xóa từ");
+            System.out.println("3. Thêm định nghĩa mới");
+            System.out.println("4. Xuất từ điển ra file");
             System.out.println("0. Thoát");
             System.out.print("Chọn chức năng: ");
             int choice = Integer.parseInt(scanner.nextLine());
@@ -22,6 +24,12 @@ public class Dictionary {
                     break;
                 case 2:
                     wordController.drop();
+                    break;
+                case 3:
+                    wordController.define();
+                    break;
+                case 4:
+                    wordController.exportToTextFile();
                     break;
                 case 0:
                     System.out.println("Kết thúc chương trình!");

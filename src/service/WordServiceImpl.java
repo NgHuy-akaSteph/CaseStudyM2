@@ -13,7 +13,17 @@ public class WordServiceImpl implements IWordService {
     }
 
     @Override
+    public void define() {
+        wordRepo.define();
+    }
+
+    @Override
     public boolean drop(String word) {
         return wordRepo.drop(word);
+    }
+
+    @Override
+    public void exportToTextFile() {
+        wordRepo.exportToTextFile();
     }
 }

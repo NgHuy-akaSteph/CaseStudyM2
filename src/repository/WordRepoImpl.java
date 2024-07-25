@@ -1,17 +1,17 @@
 package repository;
 
 import entities.Definition;
-import entities.Request;
 import entities.Word;
 
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 public class WordRepoImpl implements IWordRepo {
     private final static Map<String, Word> dictionary = new LinkedHashMap<>();
-
+    private final static Scanner scanner = new Scanner(System.in);
     static{
         Definition def1 = new Definition("Noun", "Địa chỉ", "This is my address");
         Definition def2 = new Definition("Verb", "Chỉ đường", "Can you address me to the nearest gas station?");
@@ -55,9 +55,57 @@ public class WordRepoImpl implements IWordRepo {
     }
 
     @Override
-    public boolean defineWord(Request request) {
-        return false;
+    public void define () {
+        System.out.print("Nhập từ cần định nghĩa: ");
+        String inputString = scanner.nextLine();
+        boolean isExist = dictionary.containsKey(inputString);
+        if(isExist) {
+            System.out.println("Từ đã tồn tại! Thêm định nghĩa mới cho từ!");
+            System.out.print("Loại định nghĩa (Verb/Noun/Adjective/Synonym):  ");
+            String type = scanner.nextLine();
+            if(type.equals("Noun") || type.equals("Verb") || type.equals("Adjective")){
+                System.out.print("Nghĩa của từ: ");
+                String meaning = scanner.nextLine();
+                System.out.print("Ví dụ: ");
+                String example = scanner.nextLine();
+                Definition def = new Definition(type, meaning, example);
+                List<Definition> defList = new ArrayList<>(dictionary.get(inputString).getDefinitions());
+                defList.add(def);
+                dictionary.get(inputString).setDefinitions(defList);
+                System.out.println("Đã thêm định nghĩa mới cho từ " + inputString);
+            }
+            else if(type.equals("Synonym")){
+                System.out.print("Từ đồng nghĩa: ");
+                String synonym = scanner.nextLine();
+                List<String> synonymList = new ArrayList<>(dictionary.get(inputString).getSynonyms());
+                synonymList.addAll(Arrays.asList(synonym.split(",")));
+                dictionary.get(inputString).setSynonyms(synonymList);
+                System.out.println("Đã thêm từ đồng nghĩa cho từ " + inputString);
+            }
+            else {
+                System.out.println("Loại từ không hợp lệ!");
+            }
+        }
+        else{
+            System.out.println("Từ chưa tồn tại! Thêm từ mới vào từ điển!");
+            System.out.print("Phát âm: ");
+            String pronunciation = scanner.nextLine();
+            System.out.print("Loại từ: ");
+            String wordType = scanner.nextLine();
+            System.out.print("Nghĩa: ");
+            String meaning = scanner.nextLine();
+            System.out.print("Ví dụ: ");
+            String example = scanner.nextLine();
+            System.out.println("Các từ đồng nghĩa: ");
+            String synonyms = scanner.nextLine();
+            List<String> synonymList = List.of(synonyms.split(","));
+            Definition def = new Definition(wordType, meaning, example);
+            Word w = new Word(inputString, pronunciation, List.of(def), synonymList);
+            dictionary.put(inputString, w);
+            System.out.println("Từ " + inputString + " đã được thêm vào từ điển!");
+        }
     }
+
 
     public boolean drop(String word) {
         if(dictionary.containsKey(word)) {
@@ -65,5 +113,20 @@ public class WordRepoImpl implements IWordRepo {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void exportToTextFile() {
+        System.out.println("Xuất file 10%..20%..30%..40%..50%..60%..70%..80%..90%..Hoàn thành!");
+        try( FileWriter fileWriter = new FileWriter("src/view/dictionary.txt", false);
+             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)
+        ) {
+            for(Map.Entry<String, Word> entry : dictionary.entrySet()) {
+                bufferedWriter.write(entry.getValue().toString());
+                bufferedWriter.newLine();
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

@@ -20,6 +20,10 @@ public class WordController{
         }
     }
 
+    public void define() {
+        wordService.define();
+    }
+
     public void drop() {
         System.out.print("Nhập từ cần xóa: ");
         String inputString = scanner.nextLine();
@@ -31,5 +35,8 @@ public class WordController{
         }
     }
 
+    public void exportToTextFile() {
+        wordService.exportToTextFile();
+    }
 
 }
